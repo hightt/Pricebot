@@ -7,3 +7,8 @@
     padding: 3px !important;
     font-size: 15px;
 }
+.pagination
+{
+    margin-top: 15px !important;
+    justify-content: center !important;
+}
