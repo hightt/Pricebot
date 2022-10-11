@@ -12,3 +12,7 @@
     margin-top: 15px !important;
     justify-content: center !important;
 }
+.paginate_button > a
+{
+    height: 100%;
+}
