@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\PriceHistory;
 use Illuminate\Http\Request;
 use Response;
 
@@ -16,13 +17,24 @@ class ProductController extends Controller
     public function index()
     {
 
-        // $p = new Product;
-        // $products = $this->fetchAndUploadProducts(new Product);
-        // $p->updateProducts($products);
-
+        $this->cronJobUpdateProducts(new Product);
 
         return view('layouts.main');
     }
+
+    public function cronJobUpdateProducts($product)
+    {
+        $products = $this->getProductsFromApi($product);
+
+        /* Insert or update products in `products` table */
+        $product->updateProducts($products);
+
+        /*Insert price history products in `prices_history` table */
+        $price_history = new PriceHistory();
+        $price_history->createPriceHistory($products);
+
+    }
+
 
     public function getProductsAjax(Request $request)
     {
@@ -41,15 +53,13 @@ class ProductController extends Controller
             ->take($request->get('length'))
             ->get();
 
-        foreach($records as $record) {
-            if($record->promotion == 0){
+        foreach ($records as $record) {
+            if ($record->promotion == 0) {
                 $record->promotion = "<i style='color: red;'>✕</i>";
                 $record->old_price = "<i style='color: red;'>✕</i>";
-            }
-            else {
+            } else {
                 $record->promotion = "<i style='color: green;'>✓</i>";
             }
-
         }
         return json_encode(
             array(
@@ -61,10 +71,8 @@ class ProductController extends Controller
         );
     }
 
-    public function fetchAndUploadProducts($product)
+    public function getProductsFromApi($product)
     {
-
-        $seed = [];
 
         $arrayUrl = [
             "https://www.dolina-noteci.pl/pol_m_Karma-dla-psa-231.html?counter=",
@@ -73,8 +81,9 @@ class ProductController extends Controller
             "https://www.dolina-noteci.pl/pol_m_Akcesoria-265.html?counter=",
         ];
 
-        for ($j = 0; $j < count($arrayUrl); $j++) {
-        // for ($j = 2; $j < 3; $j++) {
+        $seed = [];
+        // for ($j = 0; $j < count($arrayUrl); $j++) {
+            for ($j = 1; $j < 3; $j++) {
             $flag = true;
             $i = 0;
 
@@ -92,9 +101,7 @@ class ProductController extends Controller
         }
 
         // Merge all arrays inside $seed into one
-        file_put_contents("result.txt", print_r(array_merge(...$seed), true));
         return array_merge(...$seed);
-
     }
 
 
