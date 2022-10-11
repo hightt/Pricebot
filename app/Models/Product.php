@@ -18,7 +18,7 @@ class Product extends Model
 
     public function pricehistories()
     {
-        return $this->hasMany(PriceHistory::class);
+        return $this->hasMany(PriceHistory::class, 'external_id', 'external_id');
     }
     public function findObjects($url, $name = ""): array
     {
