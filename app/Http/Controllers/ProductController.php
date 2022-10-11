@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index()
     {
 
-        $this->cronJobUpdateProducts(new Product);
+        // $this->cronJobUpdateProducts(new Product);
 
         return view('layouts.main');
     }
@@ -54,6 +54,8 @@ class ProductController extends Controller
             ->get();
 
         foreach ($records as $record) {
+            $record->current_price = number_format($record->current_price, 2, '.', '');
+
             if ($record->promotion == 0) {
                 $record->promotion = "<i style='color: red;'>✕</i>";
                 $record->old_price = "<i style='color: red;'>✕</i>";
@@ -124,7 +126,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $test = $product->pricehistories->toArray();
+        foreach($test as $t) {
+            echo $t['id']. "\n" ;
+        }
     }
 
 
