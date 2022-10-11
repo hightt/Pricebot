@@ -12,8 +12,14 @@ include public_path() . "/libraries/simple_html_dom.php";
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['id, external_id, name, current_price, old_price, promotion'];
+    protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion', 'created_at', 'updated_at'];
+    protected $guarded = [];
 
+
+    public function pricehistories()
+    {
+        return $this->hasMany(PriceHistory::class);
+    }
     public function findObjects($url, $name = ""): array
     {
         $html = @file_get_html($url);
@@ -35,14 +41,7 @@ class Product extends Model
             $product->current_price = (float) str_replace(',', '.', $seed->find($tagPrice)[0]->plaintext);
             $product->old_price = !empty($seed->find($tagOldPrice)) ? (float) str_replace(',', '.', $seed->find($tagOldPrice)[0]->plaintext) : 0;
             $product->external_id = $id;
-
-            if ($product->old_price <= 0) {
-                $product->promotion = 0;
-            } else {
-                $product->promotion = 1;
-            }
-            // $product->url = $seed->find($tagUrl)->plaintext;
-            // $product->url
+            $product->old_price <= 0 ? $product->promotion = 0 : $product->promotion = 1;
 
             $result[$id] = $product;
         }
@@ -55,24 +54,36 @@ class Product extends Model
         $externalIds = Product::all()->pluck('external_id')->toArray();
 
         $stats = [
-            'total' => count($products),
-            'update' => 0,
-            'insert' => 0,
-            'failed' => 0
+            'total' => 0,
+            'updated' => 0,
+            'created' => 0,
+            'failed' => 0,
         ];
+
         foreach ($products as $product) {
-            // echo $product->current_price."\n";
-            DB::insert(
-                'INSERT INTO products (id, external_id, name, current_price, old_price, promotion)
-            VALUES (0, :external_id, :name, :current_price, :old_price, :promotion)',
-                [
-                    ':external_id' => $product->external_id,
-                    ':name' => $product->name,
-                    ':current_price' => $product->current_price,
-                    ':old_price' => $product->old_price,
-                    ':promotion' => $product->promotion
-                ]
-            );
+            if (in_array($product['external_id'], $externalIds)) {
+                Product::where('external_id', $product['external_id'])->update([
+                    'external_id' => $product->external_id,
+                    'name' => $product->name,
+                    'current_price' => $product->current_price,
+                    'old_price' => $product->old_price,
+                    'promotion' => $product->promotion,
+                ]);
+                $stats['updated']++;
+            } else {
+                Product::create([
+                    'external_id' => $product->external_id,
+                    'name' => $product->name,
+                    'current_price' => $product->current_price,
+                    'old_price' => $product->old_price,
+                    'promotion' => $product->promotion,
+                ]);
+                $stats['created']++;
+            }
         }
+
+        echo "*** CREATED: " . $stats['created'] . " *** \n";
+        echo "*** UPDATED: " . $stats['updated'] . " *** \n";
     }
+
 }
