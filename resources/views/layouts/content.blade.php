@@ -1,5 +1,5 @@
 <div class="col-lg-12 pt-4 pb-4">
-    <table id="mainTable" class="table table-striped table-hover" >
+    <table id="mainTable" class="table table-striped table-hover">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -10,6 +10,7 @@
             </tr>
         </thead>
     </table>
+
 
 </div>
 
@@ -26,8 +27,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
             },
-            columns: [
-                {
+            columns: [{
                     data: 'external_id',
                     responsivePriority: 1
                 },
@@ -63,8 +63,13 @@
                     'next': '<i class="fa-solid fa-chevron-right"></i>'
                 }
             },
+            "dom": 'rtp'
 
         });
-
     });
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 </script>
