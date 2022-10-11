@@ -6,7 +6,7 @@
                 <th scope="col">Produkt</th>
                 <th scope="col">Obecna cena (zł)</th>
                 <th scope="col">Promocja</th>
-                <th scope="col">Przeceniony (zł)</th>
+                <th scope="col">Przeceniony z (zł)</th>
             </tr>
         </thead>
     </table>
@@ -32,7 +32,10 @@
                 },
                 {
                     data: 'name',
-                    responsivePriority: 5
+                    responsivePriority: 5,
+                    "fnCreatedCell": function(nTd, sData, oData, iRow, iCol) {
+                        $(nTd).html("<a href='/products/" + oData.id + "'>" + oData.name + "</a>");
+                    }
                 },
                 {
                     data: 'current_price',
