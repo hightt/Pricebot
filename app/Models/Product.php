@@ -85,8 +85,8 @@ class Product extends Model
             }
         }
 
-        echo "*** CREATED: " . $stats['created'] . " *** \n";
-        echo "*** UPDATED: " . $stats['updated'] . " *** \n";
+        // echo "*** CREATED: " . $stats['created'] . " *** \n";
+        // echo "*** UPDATED: " . $stats['updated'] . " *** \n";
     }
     public function getCreatedAtFormattedAttribute()
     {

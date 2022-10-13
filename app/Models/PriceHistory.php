@@ -29,7 +29,7 @@ class PriceHistory extends Model
             ]);
             $i++;
         }
-        echo "*** CREATED: " . $i . " HISTORY PRICES*** \n";
+        // echo "*** CREATED: " . $i . " HISTORY PRICES*** \n";
     }
 
     public function getCreatedAtFormattedAttribute()
