@@ -17,8 +17,6 @@ class ProductController extends Controller
     public function index()
     {
 
-        // $this->cronJobUpdateProducts(new Product);
-
         return view('layouts.main');
     }
 
@@ -32,7 +30,6 @@ class ProductController extends Controller
         /*Insert price history products in `prices_history` table */
         $price_history = new PriceHistory();
         $price_history->createPriceHistory($products);
-
     }
 
 
@@ -55,6 +52,7 @@ class ProductController extends Controller
 
         foreach ($records as $record) {
             $record->current_price = number_format($record->current_price, 2, '.', '');
+            $record->old_price = number_format($record->old_price, 2, '.', '');
 
             if ($record->promotion == 0) {
                 $record->promotion = "<i style='color: red;'>✕</i>";
@@ -84,8 +82,8 @@ class ProductController extends Controller
         ];
 
         $seed = [];
-        // for ($j = 0; $j < count($arrayUrl); $j++) {
-            for ($j = 1; $j < 3; $j++) {
+        for ($j = 0; $j < count($arrayUrl); $j++) {
+        // for ($j = 1; $j < 3; $j++) {
             $flag = true;
             $i = 0;
 
@@ -126,10 +124,29 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $test = $product->pricehistories->toArray();
-        foreach($test as $t) {
-            echo $t['id']. "\n" ;
+
+
+        // $product['labels'] = implode(', ', $product['labels']);
+
+        return view('layouts.details')->with('product', $product);
+    }
+
+
+    public function getDetailsAjax($id)
+    {
+        $product = product::find($id);
+
+        $results = [
+            'details' => $product->toArray(),
+            'price_history' => $product->pricehistories->toArray()
+        ];
+
+        foreach ($results['price_history'] as $price_history) {
+            $results['labels'][] =  $price_history['created_at_formatted'];
+            $results['prices'][] =  $price_history['price'];
         }
+
+        return $results;
     }
 
 
