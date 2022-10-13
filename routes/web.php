@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('/products', ProductController::class);
 Route::get('/getProductsAjax', [ProductController::class, 'getProductsAjax'])->name('products.ajax');
+Route::get('/getDetailsAjax/{id}', [ProductController::class, 'getDetailsAjax'])->name('details.ajax');
 
 Route::get('/', function(){
-    return view('layouts.main');
+    return redirect('/products');
 });
