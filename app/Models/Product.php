@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+
 include public_path() . "/libraries/simple_html_dom.php";
 
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion'];
+    protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion', 'url'];
     protected $guarded = [];
     protected $dates  = ['created_at' , 'updated_at'];
     protected $appends = ['created_at_formatted', 'updated_at_formatted'];
@@ -30,19 +28,20 @@ class Product extends Model
         }
     }
 
-    public function findProduct($seeds, $tagName = "a.product__name", $tagPrice = "strong.price", $tagOldPrice = "del.price", $tagUrl = "")
+    public function findProduct($seeds, $tagName, $tagPrice, $tagOldPrice, $tagUrl)
     {
 
         $result = [];
         foreach ($seeds as $seed) {
             $id = (int) $seed->getAttribute('data-product_id');
             $old_price = !empty($seed->find($tagOldPrice)) ? (float) str_replace(',', '.', $seed->find($tagOldPrice)[0]->plaintext) : 0;
-            $product = Product::create([
+            $product = new Product([
                 'external_id' => $id,
                 'name' => $seed->find($tagName)[0]->plaintext,
                 'current_price' => (float) str_replace(',', '.', $seed->find($tagPrice)[0]->plaintext),
                 'old_price' => $old_price,
                 'promotion' => $old_price <= 0 ? '0' : '1',
+                'url' => "https://www.dolina-noteci.pl" . $seed->find($tagUrl)[0]->href
             ]);
 
             $result[$id] = $product;
@@ -70,6 +69,7 @@ class Product extends Model
                     'current_price' => $product->current_price,
                     'old_price' => $product->old_price,
                     'promotion' => $product->promotion,
+                    'url' => $product->url,
                 ]);
                 $stats['updated']++;
             } else {
@@ -79,6 +79,7 @@ class Product extends Model
                     'current_price' => $product->current_price,
                     'old_price' => $product->old_price,
                     'promotion' => $product->promotion,
+                    'url' => $product->url,
                 ]);
                 $stats['created']++;
             }
