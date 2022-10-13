@@ -16,14 +16,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-
-        return view('layouts.main');
+        // $this->cronJobUpdateProducts(new Product);
+        // return view('layouts.main');
     }
 
     public function cronJobUpdateProducts($product)
     {
         $products = $this->getProductsFromApi($product);
-
+        return $products;
         /* Insert or update products in `products` table */
         $product->updateProducts($products);
 
@@ -82,8 +82,8 @@ class ProductController extends Controller
         ];
 
         $seed = [];
-        for ($j = 0; $j < count($arrayUrl); $j++) {
-        // for ($j = 1; $j < 3; $j++) {
+        // for ($j = 0; $j < count($arrayUrl); $j++) {
+        for ($j = 1; $j < 3; $j++) {
             $flag = true;
             $i = 0;
 

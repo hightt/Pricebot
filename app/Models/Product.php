@@ -35,13 +35,15 @@ class Product extends Model
 
         $result = [];
         foreach ($seeds as $seed) {
-            $product = new Product;
             $id = (int) $seed->getAttribute('data-product_id');
-            $product->name = $seed->find($tagName)[0]->plaintext;
-            $product->current_price = (float) str_replace(',', '.', $seed->find($tagPrice)[0]->plaintext);
-            $product->old_price = !empty($seed->find($tagOldPrice)) ? (float) str_replace(',', '.', $seed->find($tagOldPrice)[0]->plaintext) : 0;
-            $product->external_id = $id;
-            $product->old_price <= 0 ? $product->promotion = 0 : $product->promotion = 1;
+            $old_price = !empty($seed->find($tagOldPrice)) ? (float) str_replace(',', '.', $seed->find($tagOldPrice)[0]->plaintext) : 0;
+            $product = Product::create([
+                'external_id' => $id,
+                'name' => $seed->find($tagName)[0]->plaintext,
+                'current_price' => (float) str_replace(',', '.', $seed->find($tagPrice)[0]->plaintext),
+                'old_price' => $old_price,
+                'promotion' => $old_price <= 0 ? '0' : '1',
+            ]);
 
             $result[$id] = $product;
         }
