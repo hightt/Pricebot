@@ -6,16 +6,16 @@ use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 include public_path() . "/libraries/simple_html_dom.php";
 
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion'];
     protected $guarded = [];
-
-
+    protected $dates  = ['created_at' , 'updated_at'];
+    protected $appends = ['created_at_formatted', 'updated_at_formatted'];
     public function pricehistories()
     {
         return $this->hasMany(PriceHistory::class, 'external_id', 'external_id');
@@ -85,5 +85,12 @@ class Product extends Model
         echo "*** CREATED: " . $stats['created'] . " *** \n";
         echo "*** UPDATED: " . $stats['updated'] . " *** \n";
     }
-
+    public function getCreatedAtFormattedAttribute()
+    {
+       return $this->created_at->format('H:i d, M Y');
+    }
+    public function getUpdatedAtFormattedAttribute()
+    {
+       return $this->updated_at->format('d-m-Y');
+    }
 }
