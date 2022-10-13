@@ -55,7 +55,15 @@
 
 
     <div class="container">
-        @yield('content')
+        <div class="row">
+            @include('layouts.header')
+        </div>
+        <div class="row">
+            @yield('content')
+        </div>
+        <div class="row">
+            @include('layouts.footer')
+        </div>
     </div>
 
 
