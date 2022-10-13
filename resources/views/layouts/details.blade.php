@@ -10,18 +10,10 @@
         <canvas id="myChart"></canvas>
     </div>
 
-
-
-
-
-
-
-    <hr>
-    <div class="row">
+    <div class="row mt-3">
         <a class="h4 text-dark text-decoration-none " data-bs-toggle="collapse" href="#details" role="button" aria-expanded="false" aria-controls="details">
             Informacje o produkcie
         </a>
-
         <div class="collapse show" id="details">
             <div class="card card-body">
                 <div class="row">
@@ -42,14 +34,6 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        Ostatnia aktualizacja:
-                    </div>
-                    <div class="col-lg-8">
-                        {{$product->updated_at_formatted}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
                         @if($product->promotion == 1)
                         Obecna cena promocyjna:
                         @else
@@ -57,7 +41,7 @@
                         @endif
                     </div>
                     <div class="col-lg-8">
-                        {{$product->current_price . "zł"}}
+                        {{$product->current_price . " zł"}}
                     </div>
                 </div>
                 <div class="row">
@@ -78,7 +62,7 @@
                     </div>
                     <div class="col-lg-8">
                         @if($product->promotion == 1)
-                        {{$product->old_price . "zł"}}
+                        {{$product->old_price . " zł"}}
                         @else
                         <i style="color: red;">✕</i>
                         @endif
@@ -90,7 +74,7 @@
                     </div>
                     <div class="col-lg-8">
                         @if($product->promotion == 1)
-                        {{number_format($product->old_price - $product->current_price, 2, '.', '') . "zł"}}
+                        {{number_format($product->old_price - $product->current_price, 2, '.', '') . " zł"}}
                         @else
                         <i style="color: red;">✕</i>
                         @endif
@@ -98,8 +82,32 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row mt-3">
+        <a class="h4 text-dark text-decoration-none " data-bs-toggle="collapse" href="#details_refresh" role="button" aria-expanded="false" aria-controls="details_refresh">
+            Szczegóły
+        </a>
+        <div class="collapse show" id="details_refresh">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        Ostatnia aktualizacja:
+                    </div>
+                    <div class="col-lg-8">
+                        {{$product->updated_at_formatted}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        URL:
+                    </div>
+                    <div class="col-lg-8">
+                        <a href="{{$product->url}}">{{$product->name}}</a>
+                    </div>
+                </div>
 
-
+            </div>
+        </div>
     </div>
 </div>
 
