@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->float('current_price');
             $table->boolean('promotion');
             $table->float('old_price');
+            $table->text('url');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
