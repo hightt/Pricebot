@@ -12,12 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('products.index')}}">Strona główna</a>
                 </li>
-                <li>
-                    <a class="nav-link active" aria-current="page" href="#">FAQ</a>
-                </li>
-                <li>
-                    <a class="nav-link active" aria-current="page" href="#">O nas</a>
-                </li>
             </ul>
         </div>
     </div>
