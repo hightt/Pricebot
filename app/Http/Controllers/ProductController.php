@@ -17,13 +17,12 @@ class ProductController extends Controller
     public function index()
     {
         // $this->cronJobUpdateProducts(new Product);
-        // return view('layouts.main');
+        return view('layouts.main');
     }
 
     public function cronJobUpdateProducts($product)
     {
         $products = $this->getProductsFromApi($product);
-        return $products;
         /* Insert or update products in `products` table */
         $product->updateProducts($products);
 
@@ -35,7 +34,6 @@ class ProductController extends Controller
 
     public function getProductsAjax(Request $request)
     {
-
         $columnIndex =  $request->get('order')[0]['column'];
         $columnName = $request->get('columns')[$columnIndex]['data'];
         $columnSortOrder = $request->get('order')[0]['dir'];
@@ -91,7 +89,7 @@ class ProductController extends Controller
                 $url = $arrayUrl[$j] . $i;
                 $objects = $product->findObjects($url, '.product');
                 if (!empty($objects)) {
-                    $seed[] = $product->findProduct($objects);
+                    $seed[] = $product->findProduct($objects, "a.product__name", "strong.price", "del.price", "a.product__icon");
                     $i++;
                 } else {
                     /* No more products to fetch */
