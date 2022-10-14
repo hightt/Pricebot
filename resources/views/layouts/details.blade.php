@@ -17,7 +17,7 @@
         <div class="collapse show" id="details">
             <div class="card card-body">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         Identyfikator:
                     </div>
                     <div class="col-lg-8">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         Nazwa:
                     </div>
                     <div class="col-lg-8">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         @if($product->promotion == 1)
                         Obecna cena promocyjna:
                         @else
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         Promocja:
                     </div>
                     <div class="col-lg-8">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         Przeceniono z kwoty:
                     </div>
                     <div class="col-lg-8">
@@ -69,10 +69,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         Zniżka:
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-8 ">
                         @if($product->promotion == 1)
                         {{number_format($product->old_price - $product->current_price, 2, '.', '') . " zł"}}
                         @else
@@ -90,7 +90,7 @@
         <div class="collapse show" id="details_refresh">
             <div class="card card-body">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         Ostatnia aktualizacja:
                     </div>
                     <div class="col-lg-8">
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 fw-bold">
                         URL:
                     </div>
                     <div class="col-lg-8">
