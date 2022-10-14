@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,6 @@ Route::get('/getDetailsAjax/{id}', [ProductController::class, 'getDetailsAjax'])
 Route::get('/', function(){
     return redirect('/products');
 });
+
+
+Route::get('/update_products/23398e43ab2ee0412f775adb8b52988a', [ProductController::class, 'cronJobUpdateProducts']);
