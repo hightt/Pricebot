@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-include public_path() . "/libraries/simple_html_dom.php";
+include_once "libraries/simple_html_dom.php";
 
 class Product extends Model
 {
