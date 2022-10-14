@@ -20,8 +20,9 @@ class ProductController extends Controller
         return view('layouts.main');
     }
 
-    public function cronJobUpdateProducts($product)
+    public function cronJobUpdateProducts()
     {
+        $product = new Product;
         $products = $this->getProductsFromApi($product);
         /* Insert or update products in `products` table */
         $product->updateProducts($products);
