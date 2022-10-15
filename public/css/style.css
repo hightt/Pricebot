@@ -25,3 +25,17 @@
 tbody > tr > td {
     padding: 3px;
 }
+
+.dtr-data
+{
+    display: block;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .product_name
+    {
+        text-decoration: underline !important;
+        color: blue;
+    }
+}
