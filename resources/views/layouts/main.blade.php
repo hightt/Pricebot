@@ -2,7 +2,7 @@
 
 
 @section('content')
-<div class="col-lg-12 pt-4 pb-4">
+<div class="col-lg-12 pt-4 pb-4 ps-0 pe-0">
     <table id="mainTable" class="table table-hover">
         <thead>
             <tr>
@@ -15,11 +15,8 @@
         </thead>
     </table>
 </div>
-
 <script>
-
     $(document).ready(function() {
-
         $('#mainTable').DataTable({
             processing: true,
             serverSide: true,
@@ -37,8 +34,9 @@
                 {
                     data: 'name',
                     responsivePriority: 5,
-                    "fnCreatedCell": function(nTd, sData, oData, iRow, iCol) {
-                        $(nTd).html("<a class='text-decoration-none' href='/products/" + oData.id + "'>" + "<span class='product_name'>" + oData.name + "</span>" + "</a>");
+                    render: function(data, type, row) {
+                        console.log(row);
+                        return "<a class='product-name text-decoration-none' href='/products/" + row.id + "' " + "title='" + data + "'" + ">" + "<span class='product_name'>" + data + "</span>" + "</a>";
                     }
                 },
                 {
@@ -70,6 +68,7 @@
                     'next': '<i class="fa-solid fa-chevron-right"></i>'
                 },
             },
+            "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>'
             // "dom": 'rtp'
 
         });
