@@ -10,7 +10,7 @@
                 <th scope="col">Produkt</th>
                 <th scope="col">Obecna cena (zł)</th>
                 <th scope="col">Promocja</th>
-                <th scope="col">Przeceniony z (zł)</th>
+                <th scope="col">Przeceniony (zł)</th>
             </tr>
         </thead>
     </table>
