@@ -36,8 +36,8 @@
                     responsivePriority: 5,
                     render: function(data, type, row) {
                         var name = data;
-                        if(parseInt(data.length) > 95)
-                            name = data.substring(0,95) + "...";
+                        if (parseInt(data.length) > 95)
+                            name = data.substring(0, 95) + "...";
                         return "<a class='product-name text-decoration-none' href='/products/" + row.id + "' " + "title='" + data + "'" + ">" + "<span class='product_name'>" + name + "</span>" + "</a>";
                     }
                 },

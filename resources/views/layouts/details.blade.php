@@ -7,7 +7,7 @@
 
 <div class="col-lg-12 pt-4 pb-4">
     <div class="row">
-        <h5 class="text-center" >{{$product->name}}</h5>
+        <h5 class="text-center">{{$product->name}}</h5>
     </div>
     <div>
         <canvas id="myChart"></canvas>
@@ -115,8 +115,6 @@
 </div>
 
 <script>
-    var product = <?php echo json_encode($product); ?>
-
     $(document).ready(function() {
         $.ajax({
             url: "{{route('details.ajax', $product->id)}}",

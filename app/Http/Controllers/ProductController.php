@@ -16,7 +16,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $this->cronJobUpdateProducts(new Product);
         return view('layouts.main');
     }
 
@@ -81,8 +80,7 @@ class ProductController extends Controller
         ];
 
         $seed = [];
-        // for ($j = 0; $j < count($arrayUrl); $j++) {
-        for ($j = 1; $j < 3; $j++) {
+        for ($j = 0; $j < count($arrayUrl); $j++) {
             $flag = true;
             $i = 0;
 
@@ -105,17 +103,6 @@ class ProductController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Product  $product
@@ -123,10 +110,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-
-
-        // $product['labels'] = implode(', ', $product['labels']);
-
         return view('layouts.details')->with('product', $product);
     }
 
@@ -148,16 +131,4 @@ class ProductController extends Controller
         return $results;
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
 }
