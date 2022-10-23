@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Artisan;
 Route::resource('/products', ProductController::class);
 Route::get('/getProductsAjax', [ProductController::class, 'getProductsAjax'])->name('products.ajax');
 Route::get('/getDetailsAjax/{id}', [ProductController::class, 'getDetailsAjax'])->name('details.ajax');
+Route::get('/changedPrice', \App\Http\Controllers\ProductPriceController::class);
 
 Route::get('/', function(){
     return redirect('/products');
