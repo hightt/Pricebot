@@ -14,9 +14,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('products.index')}}">Produkty</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('products.changedPrice')}}">Ostatnia zmiana cen</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
