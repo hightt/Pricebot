@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('layouts.main');
+        return view('layouts.content');
     }
 
     public function cronJobUpdateProducts()
