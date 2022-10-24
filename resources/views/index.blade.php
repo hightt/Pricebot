@@ -27,6 +27,7 @@
 </head>
 
 <body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/jQuery-3.6.0/jquery-3.6.0.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/DataTables-1.12.1/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/DataTables-1.12.1/js/dataTables.bootstrap5.js') }}"></script>
