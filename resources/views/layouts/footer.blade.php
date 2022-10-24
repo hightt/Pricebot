@@ -5,8 +5,10 @@
       <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
     </a>
 
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Strona główna</a></li>
+    <ul class="nav col-md-4 justify-content-end d-block">
+      <li class="nav-item"><a href="{{route('home')}}" class="nav-link px-2 text-muted">Strona główna</a></li>
+      <li class="nav-item"><a href="{{route('products.index')}}" class="nav-link px-2 text-muted">Produkty</a></li>
+      <li class="nav-item"><a href="{{route('products.changedPrice')}}" class="nav-link px-2 text-muted">Ostatnia zmiana cen</a></li>
 
     </ul>
   </footer>
