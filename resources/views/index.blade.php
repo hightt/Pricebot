@@ -24,10 +24,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('libraries/DataTables/SearchPanes-2.0.2/css/searchPanes.bootstrap5.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('libraries/DataTables/Select-1.4.0/css/select.bootstrap5.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('libraries/DataTables/StateRestore-1.1.1/css/stateRestore.bootstrap5.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/jQuery-3.6.0/jquery-3.6.0.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/DataTables-1.12.1/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/DataTables-1.12.1/js/dataTables.bootstrap5.js') }}"></script>
