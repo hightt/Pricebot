@@ -13,7 +13,12 @@ class ProductPriceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __invoke()
+    public function index()
+    {
+        return view('layouts.changed_price_list');
+    }
+
+    public function getAjaxPriceHistory()
     {
         $external_ids = DB::select(
             DB::raw("SELECT DISTINCT external_id FROM price_histories ph  WHERE external_id IN (SELECT ph2.external_id
@@ -22,12 +27,28 @@ class ProductPriceController extends Controller
         HAVING (COUNT(DISTINCT ph2.price) = 1) = 0)")
         );
 
-        $totalExIds = [];
-        foreach($external_ids as $ex_id) {
-            $totalExIds[] = $ex_id->external_id;
-            echo "'" . $ex_id->external_id . "',";
-        }
-        die;
 
+        $results = [];
+        foreach ($external_ids as $val) {
+            $product = Product::where('external_id', $val->external_id)->first();
+            $results[$product->id] = [
+                'details' => $product->toArray(),
+                'price_history' => $product->pricehistories()->get()->toArray()
+            ];
+        }
+
+
+
+        foreach ($results as $price_history) {
+            foreach($price_history['price_history'] as $history) {
+                $results[$price_history['details']['id']]['labels'][] =  $history['created_at_formatted'];
+                $results[$price_history['details']['id']]['prices'][] =  $history['price'];
+            }
+
+        }
+        // echo "<pre>";
+        //     echo print_r($results);
+        // echo "</pre>";
+        return $results;
     }
 }
