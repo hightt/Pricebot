@@ -116,7 +116,7 @@ class ProductController extends Controller
 
     public function getDetailsAjax($id)
     {
-        $product = product::find($id);
+        $product = Product::find($id);
 
         $results = [
             'details' => $product->toArray(),
