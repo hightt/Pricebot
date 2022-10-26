@@ -3,8 +3,7 @@
 
 @section('content')
 <script type="text/javascript" src="{{ asset('libraries/chart.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
-
+<script src="{{asset('js/chartScript.js')}}"></script>
 <div class="col-lg-12 pt-4 pb-4">
     <div class="row">
         <h5 class="text-center">{{$product->name}}</h5>
@@ -116,60 +115,9 @@
 
 <script>
     $(document).ready(function() {
-        $.ajax({
-            url: "{{route('details.ajax', $product->id)}}",
-            cache: false,
-            success: function(response) {
-                chart(response);
-            }
-        });
-
-        function chart(response) {
-            console.log(response);
-            const labels = response.labels;
-
-            const data = {
-                labels: labels,
-                datasets: [{
-                    label: "Cena: ",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: response.prices,
-                }]
-            };
-
-            const config = {
-                type: 'line',
-                data: data,
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false,
-                            position: 'bottom',
-                            labels: {
-                                color: 'black',
-
-                            },
-                        },
-                        title: {
-                            display: true,
-                            text: 'Rys 1. Zmiana ceny produktu w podanym okresie czasu',
-                            position: 'bottom'
-
-                        }
-                    },
-                }
-            };
-
-
-
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-
-                config
-            );
-        }
-
+        var product_id = "{{$product->id}}";
+        var type = "id";
+        chart(type, product_id);
     });
 </script>
 
