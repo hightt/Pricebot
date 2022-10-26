@@ -6,11 +6,11 @@
     <table id="mainTable" class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Produkt</th>
-                <th scope="col">Obecna cena (zł)</th>
-                <th scope="col">Promocja</th>
-                <th scope="col">Przeceniony (zł)</th>
+                <th class="desktop tablet-l tablet-p">#</th>
+                <th class="desktop tablet-l tablet-p mobile-l mobile-p">Produkt</th>
+                <th class="desktop tablet-l tablet-p mobile-l">Obecna cena (zł)</th>
+                <th class="desktop tablet-l">Promocja</th>
+                <th class="desktop">Przeceniony (zł)</th>
             </tr>
         </thead>
     </table>
@@ -27,13 +27,14 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
             },
+
             columns: [{
                     data: 'external_id',
-                    responsivePriority: 1
+                    responsivePriority: 5
                 },
                 {
                     data: 'name',
-                    responsivePriority: 5,
+                    responsivePriority: 1,
                     render: function(data, type, row) {
                         var name = data;
                         if (parseInt(data.length) > 95)
