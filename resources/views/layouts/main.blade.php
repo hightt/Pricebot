@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="col-lg-12">
-        <a class="show-products btn btn-warning p-2" href="{{route('products.index')}}" role="button">Aktualne ceny produktów</a>
+        <a class="show-products btn btn-warning pt-2 pb-2 ps-4 pe-4" href="{{route('products.index')}}" role="button">Zobacz aktualne ceny produktów</a>
     </div>
     <div class="col-lg-12">
         <p class="text-muted mt-4" style="font-size: 10px;">*
