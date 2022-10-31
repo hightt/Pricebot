@@ -20,9 +20,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('/products', ProductController::class);
 Route::get('/getProductsAjax', [ProductController::class, 'getProductsAjax'])->name('products.ajax');
 
-Route::get('/getDetailsAjax/{id}', [ProductController::class, 'getDetailsAjax'])->name('details.ajax');
+Route::get('/getDetailsAjax/{product}', [ProductController::class, 'getDetailsAjax'])->name('details.ajax');
 Route::get('/getAjaxPriceHistory', [ProductPriceController::class, 'getAjaxPriceHistory'])->name('priceHistory.ajax');
-Route::get('/changedPrice', [ProductPriceController::class, 'index'])->name('products.changedPrice');;
+Route::get('/bestDeal', [ProductPriceController::class, 'index'])->name('products.bestDeal');
 
 
 
