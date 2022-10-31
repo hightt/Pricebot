@@ -9,13 +9,13 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('home')}}">Strona główna</a>
+                    <a class="nav-link active fw-bold" aria-current="page" href="{{route('home')}}">Strona główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('products.index')}}">Produkty</a>
+                    <a class="nav-link active fw-bold" aria-current="page" href="{{route('products.index')}}">Produkty</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('products.changedPrice')}}">Ostatnia zmiana cen</a>
+                    <a class="nav-link active fw-bold" aria-current="page" href="{{route('products.bestDeal')}}">Największe zniżki</a>
                 </li>
             </ul>
         </div>
