@@ -36,7 +36,7 @@ tbody > tr > td {
 
 .show-products
 {
-    width: 275px;
+    min-width: 275px;
     font-size: 18px;
     color: #474747;
 }
@@ -47,4 +47,11 @@ tbody > tr > td {
         text-decoration: underline !important;
         color: blue;
     }
+}
+
+
+.arrow-close
+{
+    color: black;
+    font-size: 35px;
 }
