@@ -19,9 +19,8 @@ class ProductController extends Controller
         return view('layouts.content');
     }
 
-    public function cronJobUpdateProducts()
+    public function cronJobUpdateProducts(Product $product)
     {
-        $product = new Product;
         $products = $this->getProductsFromApi($product);
         /* Insert or update products in `products` table */
         $product->updateProducts($products);
@@ -71,7 +70,7 @@ class ProductController extends Controller
 
     public function getProductsFromApi($product)
     {
-
+        $seed = [];
         $arrayUrl = [
             "https://www.dolina-noteci.pl/pol_m_Karma-dla-psa-231.html?counter=",
             "https://www.dolina-noteci.pl/pol_m_Karma-dla-kota-244.html?counter=",
@@ -79,7 +78,6 @@ class ProductController extends Controller
             "https://www.dolina-noteci.pl/pol_m_Akcesoria-265.html?counter=",
         ];
 
-        $seed = [];
         for ($j = 0; $j < count($arrayUrl); $j++) {
             $flag = true;
             $i = 0;
@@ -114,21 +112,14 @@ class ProductController extends Controller
     }
 
 
-    public function getDetailsAjax($id)
+    public function getDetailsAjax(Product $product)
     {
-        $product = Product::find($id);
+        // Get product with discount > $discountRange
+        $discountRange = 20;
 
-        $results = [
-            'details' => $product->toArray(),
-            'price_history' => $product->pricehistories->toArray()
-        ];
 
-        foreach ($results['price_history'] as $price_history) {
-            $results['labels'][] =  $price_history['created_at_formatted'];
-            $results['prices'][] =  $price_history['price'];
-        }
 
-        return $results;
+        return $product->dataToChart($product);
     }
 
 }
