@@ -5,6 +5,11 @@
 <script type="text/javascript" src="{{ asset('libraries/chart.js') }}"></script>
 <script src="{{asset('js/chartScript.js')}}"></script>
 <div class="col-lg-12 pt-4 pb-4">
+    <div class="row text-left ms-5">
+        <a href="{{route('products.index')}}">
+            <i class="fa-solid fa-left-long arrow-close" style="font-size: 35px;"></i>
+        </a>
+    </div>
     <div class="row">
         <h5 class="text-center">{{$product->name}}</h5>
     </div>
