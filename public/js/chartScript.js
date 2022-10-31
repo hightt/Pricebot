@@ -2,11 +2,12 @@ function chart(type, product_id) {
     $.ajax({
         url: "/getDetailsAjax/" + product_id,
         // cache: false,
-        success: function(response) {
-            drawChart(response);
-            console.log(response);
+        success: function (response) {
+            $.each(response, function (key, value) {
+                drawChart(response[key]);
+            });
         },
-        error: function(response) {
+        error: function (response) {
             console.log(response);
         }
 
@@ -50,13 +51,13 @@ function drawChart(response, chartName = "myChart", chartTitle = 'Rys 1. Zmiana 
             },
             scales: {
                 y: {
-                    title : {
+                    title: {
                         display: true,
                         text: "Kwota (zł)"
                     }
                 },
                 x: {
-                    title : {
+                    title: {
                         display: true,
                         text: "Data (dzień - miesiąc - rok)"
                     }
