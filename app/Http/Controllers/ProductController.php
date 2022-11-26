@@ -19,18 +19,6 @@ class ProductController extends Controller
         return view('layouts.content');
     }
 
-    public function cronJobUpdateProducts(Product $product)
-    {
-        $products = $this->getProductsFromApi($product);
-        /* Insert or update products in `products` table */
-        $product->updateProducts($products);
-
-        /*Insert price history products in `prices_history` table */
-        $price_history = new PriceHistory();
-        $price_history->createPriceHistory($products);
-    }
-
-
     public function getProductsAjax(Request $request)
     {
         $columnIndex =  $request->get('order')[0]['column'];
@@ -38,10 +26,11 @@ class ProductController extends Controller
         $columnSortOrder = $request->get('order')[0]['dir'];
         $searchValue = $request->get('search')['value'];
 
-        $totalRecordsWithFilter = Product::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->count();
+        $totalRecordsWithFilter = Product::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->where('active', 1)->count();
 
         $records = Product::orderBy($columnName, $columnSortOrder)
             ->where('products.name', 'like', '%' . $searchValue . '%')
+            ->where('products.active', 1)
             ->select('products.*')
             ->skip($request->get('start'))
             ->take($request->get('length'))
@@ -68,36 +57,7 @@ class ProductController extends Controller
         );
     }
 
-    public function getProductsFromApi($product)
-    {
-        $seed = [];
-        $arrayUrl = [
-            "https://www.dolina-noteci.pl/pol_m_Karma-dla-psa-231.html?counter=",
-            "https://www.dolina-noteci.pl/pol_m_Karma-dla-kota-244.html?counter=",
-            "https://www.dolina-noteci.pl/pol_m_Dla-Ciebie-261.html?counter=",
-            "https://www.dolina-noteci.pl/pol_m_Akcesoria-265.html?counter=",
-        ];
 
-        for ($j = 0; $j < count($arrayUrl); $j++) {
-            $flag = true;
-            $i = 0;
-
-            while ($flag) {
-                $url = $arrayUrl[$j] . $i;
-                $objects = $product->findObjects($url, '.product');
-                if (!empty($objects)) {
-                    $seed[] = $product->findProduct($objects, "a.product__name", "strong.price", "del.price", "a.product__icon");
-                    $i++;
-                } else {
-                    /* No more products to fetch */
-                    $flag = false;
-                }
-            }
-        }
-
-        // Merge all arrays inside $seed into one
-        return array_merge(...$seed);
-    }
 
 
     /**
@@ -116,9 +76,6 @@ class ProductController extends Controller
     {
         // Get product with discount > $discountRange
         $discountRange = 20;
-
-
-
         return $product->dataToChart($product);
     }
 
