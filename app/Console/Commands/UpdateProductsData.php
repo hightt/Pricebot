@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Product;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WebScrapperController;
+use App\Models\Webscrapper;
+
 class UpdateProductsData extends Command
 {
     /**
@@ -12,7 +15,7 @@ class UpdateProductsData extends Command
      *
      * @var string
      */
-    protected $signature = 'products:update';
+    protected $signature = 'update:products';
 
     /**
      * The console command description.
@@ -38,7 +41,7 @@ class UpdateProductsData extends Command
      */
     public function handle()
     {
-        $obj = new ProductController();
-        $obj->cronJobUpdateProducts(new Product);
+        $obj = new WebScrapperController();
+        $obj->index(new Webscrapper());
     }
 }
