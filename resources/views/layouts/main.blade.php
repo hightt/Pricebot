@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="col-lg-12" style="min-height: 50vh;">
+<div class="col-lg-12" style="min-height: 75vh;">
     <div class="row mt-5 mb-5">
         <div class="col-lg-8 align-middle mt-lg-5">
             <h3>Monitoring cen hurtowni <span class="text-warning">Dolina Noteci*</span></h3>
