@@ -38,6 +38,7 @@ class Webscrapper extends Model
             'enabled' => 0,
             'disabled' => 0,
         ];
+        $this->sendEmailUpdateSummary($stats);die;
 
         $current = 0;
         foreach ($products as $product) {
@@ -95,7 +96,7 @@ class Webscrapper extends Model
         $fileName = sprintf("%s.log", date("Y.m.d"));
         Storage::disk('logs')->put($fileName, $msg);
 
-        $this->sendEmailUpdateSummary($stats);
+        // $this->sendEmailUpdateSummary($stats);
     }
 
     public function sendEmailUpdateSummary(array $stats) : void
