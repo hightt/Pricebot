@@ -101,7 +101,7 @@ class Webscrapper extends Model
 
     public function sendEmailUpdateSummary(array $stats) : void
     {
-        Mail::to('konrad.da121@gmail.com')->send(new UpdateProducts($stats));
+        Mail::to(['konrad.duda121@gmail.com', 'kinga.figarska121@gmail.com'])->send(new UpdateProducts($stats));
     }
 
     public function createPriceHistory(array $products)
