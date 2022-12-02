@@ -22,7 +22,7 @@
             serverSide: true,
             responsive: true,
             ajax: {
-                url: "{{route('products.ajax')}}",
+                url: "{{route('products.ajax.all')}}",
                 'headers': {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
@@ -61,7 +61,7 @@
             ],
             info: false,
             lengthChange: false,
-            pageLength: 15,
+            pageLength: 25,
             searching: true,
             language: {
                 searchPlaceholder: "Wyszukaj produkty",
