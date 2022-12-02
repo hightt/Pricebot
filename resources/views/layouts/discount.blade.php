@@ -1,7 +1,6 @@
 @extends('index')
 @section('content')
 <script type="text/javascript" src="{{ asset('libraries/chart.js') }}"></script>
-<script src="{{asset('js/chartScript.js')}}"></script>
 
 <div id="root" class="container">
     <div id="chartBox" cass="row">

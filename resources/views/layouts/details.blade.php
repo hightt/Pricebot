@@ -3,7 +3,6 @@
 
 @section('content')
 <script type="text/javascript" src="{{ asset('libraries/chart.js') }}"></script>
-<script src="{{asset('js/chartScript.js')}}"></script>
 <div class="col-lg-12 pt-4 pb-4">
     <div class="row text-left ms-5">
         <a href="{{route('products.index')}}">
