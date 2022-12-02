@@ -26,15 +26,6 @@
                         @endif
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{route('discount.index')}}">
-                    @if(route('discount.index') == Request::url())
-                        <span class="fw-bold text-black">Największe zniżki</span>
-                        @else
-                        Największe zniżki
-                        @endif
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
