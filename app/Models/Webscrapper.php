@@ -38,7 +38,6 @@ class Webscrapper extends Model
             'enabled' => 0,
             'disabled' => 0,
         ];
-        $this->sendEmailUpdateSummary($stats);die;
 
         $current = 0;
         foreach ($products as $product) {
@@ -96,12 +95,12 @@ class Webscrapper extends Model
         $fileName = sprintf("%s.log", date("Y.m.d"));
         Storage::disk('logs')->put($fileName, $msg);
 
-        // $this->sendEmailUpdateSummary($stats);
+        $this->sendEmailUpdateSummary($stats);
     }
 
     public function sendEmailUpdateSummary(array $stats) : void
     {
-        Mail::to(['konrad.duda121@gmail.com', 'kinga.figarska121@gmail.com'])->send(new UpdateProducts($stats));
+        Mail::to(['konrad.duda121@gmail.com', 'kinga.figarska121@gmail.comW'])->send(new UpdateProducts($stats));
     }
 
     public function createPriceHistory(array $products)
