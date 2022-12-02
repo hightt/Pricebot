@@ -31,5 +31,3 @@ Route::group(['prefix'=>'discount', 'as'=>'discount.'], function(){
     Route::get('/', [ProductAnaliseController::class, 'index'])->name('index');
     Route::get('/bestDeal', [ProductAnaliseController::class, 'bestDealProductsAjax'])->name('biggest');
 });
-
-Route::get('/update_products/23398e43ab2ee0412f775adb8b52988a', [WebScrapperController::class, 'index']);
