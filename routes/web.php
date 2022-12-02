@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductAnaliseController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPriceController;
+use App\Http\Controllers\WebScrapperController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 /*
@@ -17,13 +19,17 @@ use Illuminate\Support\Facades\Artisan;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::resource('/products', ProductController::class);
-Route::get('/getProductsAjax', [ProductController::class, 'getProductsAjax'])->name('products.ajax');
+Route::resource('/products', ProductController::class)->only(['index', 'show']);
 
-Route::get('/getDetailsAjax/{product}', [ProductController::class, 'getDetailsAjax'])->name('details.ajax');
-Route::get('/getAjaxPriceHistory', [ProductPriceController::class, 'getAjaxPriceHistory'])->name('priceHistory.ajax');
-Route::get('/bestDeal', [ProductPriceController::class, 'index'])->name('products.bestDeal');
+Route::group(['prefix'=>'getProductsAjax', 'as'=>'products.ajax.'], function(){
+    Route::get('/', [ProductController::class, 'getProductsAjax'])->name('all');
+    Route::get('/{product}', [ProductController::class, 'getProductAjax'])->name('one');
+    
+});
 
+Route::group(['prefix'=>'discount', 'as'=>'discount.'], function(){
+    Route::get('/', [ProductAnaliseController::class, 'index'])->name('index');
+    Route::get('/bestDeal', [ProductAnaliseController::class, 'bestDealProductsAjax'])->name('biggest');
+});
 
-
-Route::get('/update_products/23398e43ab2ee0412f775adb8b52988a', [ProductController::class, 'cronJobUpdateProducts']);
+Route::get('/update_products/23398e43ab2ee0412f775adb8b52988a', [WebScrapperController::class, 'index']);
