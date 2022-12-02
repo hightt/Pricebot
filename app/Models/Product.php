@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 
 class Product extends Model
@@ -12,49 +13,75 @@ class Product extends Model
     protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion', 'url', 'active'];
     protected $guarded = [];
     protected $dates  = ['created_at', 'updated_at'];
-    protected $appends = ['created_at_formatted', 'updated_at_formatted'];
+    protected $appends = ['created_at_formatted', 'updated_at_formatted', 'discount', 'axis_data'];
 
     public function pricehistories()
     {
         return $this->hasMany(PriceHistory::class, 'external_id', 'external_id');
     }
 
-
-
-    public function dataToChart($products)
+    public function getProductsAjax(Request $request)
     {
-        $results = [];
+        $columnIndex =  $request->get('order')[0]['column'];
+        $columnName = $request->get('columns')[$columnIndex]['data'];
+        $columnSortOrder = $request->get('order')[0]['dir'];
+        $searchValue = $request->get('search')['value'];
 
-        foreach ($products as $val) {
-            /* Fix necessary if in array $products isset only one product */
-            if (!isset($val->id)) {
-                $val = $products;
-            }
+        $totalRecordsWithFilter = Product::select('count(*) as allcount')->where('name', 'like', '%' . $searchValue . '%')->where('active', 1)->count();
 
-            $results[$val->id] = [
-                'details' => $val->toArray(),
-                'price_history' => $val->pricehistories()->get()->toArray()
-            ];
-            foreach ($results[$val->id]['price_history'] as $priceHistory) {
-                $results[$val->id]['labels'][] =  $priceHistory['created_at_formatted'];
-                $results[$val->id]['prices'][] =  $priceHistory['price'];
+        $records = Product::orderBy($columnName, $columnSortOrder)
+            ->where('products.name', 'like', '%' . $searchValue . '%')
+            ->where('products.active', 1)
+            ->select('products.*')
+            ->skip($request->get('start'))
+            ->take($request->get('length'))
+            ->get();
+
+        foreach ($records as $record) {
+            $record->current_price = number_format($record->current_price, 2, '.', '');
+            $record->old_price = number_format($record->old_price, 2, '.', '');
+
+            if ($record->promotion == 0) {
+                $record->promotion = "<i style='color: red;'>✕</i>";
+                $record->old_price = "<i style='color: red;'>✕</i>";
+            } else {
+                $record->promotion = "<i style='color: green;'>✓</i>";
             }
         }
-
-        return $results;
+        return json_encode(
+            array(
+                "draw" => intval($request->get('draw')),
+                "iTotalRecords" => Product::all()->count(),
+                "iTotalDisplayRecords" => $totalRecordsWithFilter,
+                "aaData" => $records
+            )
+        );
     }
+
     public function getCreatedAtFormattedAttribute()
     {
-        return $this->created_at->format('H:i d, M Y');
+        return $this->created_at ? $this->created_at->format('H:i d, M Y') : 'Undefined';
     }
 
     public function getUpdatedAtFormattedAttribute()
     {
-        return $this->updated_at->format('d-m-Y');
+        return $this->updated_at ? $this->updated_at->format('H:i d, M Y') : 'Undefined';
     }
 
     public function getDiscountAttribute()
     {
-        return $this->promotion > 0 ? ($this->old_price - $this->current_price) : 0;
+        return $this->promotion ? ((float)$this->old_price - (float)$this->current_price) : 0;
+    }
+
+    public function getAxisDataAttribute()
+    {
+        $data = [];
+        foreach($this->pricehistories()->get() as $priceHistory) {
+            $data['oyAxis'][] = $priceHistory->created_at_formatted;
+            $data['oxAxis'][] = $priceHistory->price;
+        }
+
+        return $data;
+
     }
 }
