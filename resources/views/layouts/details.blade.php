@@ -120,9 +120,83 @@
 
 <script>
     $(document).ready(function() {
-        var product_id = "{{$product->id}}";
-        var type = "id";
-        chart(type, product_id);
+        var productId = "{{$product->id}}";
+        console.log(productId);
+
+        function getProduct() {
+            $.ajax({
+                url: "/getProductsAjax/" + productId,
+                success: function(response) {
+                    // console.log(response);
+                    drawChart(response);
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+
+            });
+        }
+        
+        function drawChart(product) {
+
+            const data = {
+                labels: product.axis_data.oyAxis,
+                datasets: [{
+                    label: "Cena: ",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: product.axis_data.oxAxis,
+                }]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false,
+                            position: 'bottom',
+                            labels: {
+                                color: 'black',
+
+                            },
+                        },
+                        title: {
+                            display: true,
+                            text: 'Rys 1. Zmiana ceny produktu w podanym okresie czasu',
+                            position: 'bottom'
+
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: "Kwota (zł)"
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: "Data (dzień - miesiąc - rok)"
+                            }
+                        }
+                    }
+                }
+            };
+
+
+
+            const myChart = new Chart(
+                document.getElementById("myChart"),
+
+                config
+            );
+        }
+
+
+        getProduct();
     });
 </script>
 
