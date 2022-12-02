@@ -55,3 +55,15 @@ tbody > tr > td {
     color: black;
     font-size: 35px;
 }
+
+
+.discount-title
+{
+    color: #363636 !important;
+    text-decoration: none !important;
+}
+
+.date, .price
+{
+    text-align: center;
+}
