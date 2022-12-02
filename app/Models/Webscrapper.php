@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Exception;
+use Illuminate\Support\Facades\Storage;
+use App\Mail\UpdateProducts;
+use Illuminate\Support\Facades\Mail;
+
 include_once public_path("libraries/simple_html_dom.php");
 
 class Webscrapper extends Model
@@ -23,44 +28,79 @@ class Webscrapper extends Model
     /* Push or update product in db */
     public function updateProducts(array $products)
     {
-        
         $externalIds = Product::pluck('external_id')->toArray();
-
         $exIdsArray = [];
+        $msg = "";
+        $stats = [
+            'total' => count($products),
+            'created' => 0,
+            'updated' => 0,
+            'enabled' => 0,
+            'disabled' => 0,
+        ];
+
+        $current = 0;
         foreach ($products as $product) {
+            $current++;
             $exIdsArray[] = $product['external_id'];
             if (in_array($product['external_id'], $externalIds)) {
-                Product::where('external_id', $product['external_id'])->update([
-                    'external_id' => $product->external_id,
-                    'name' => $product->name,
-                    'current_price' => $product->current_price,
-                    'old_price' => $product->old_price,
-                    'promotion' => $product->promotion,
-                    'url' => $product->url,
-                ]);
+                try {
+                    Product::where('external_id', $product['external_id'])->update([
+                        'external_id' => $product->external_id,
+                        'name' => $product->name,
+                        'current_price' => $product->current_price,
+                        'old_price' => $product->old_price,
+                        'promotion' => $product->promotion,
+                        'url' => $product->url,
+                    ]);
+                    $msg .= sprintf("[%d/%d][%s] Product[%d] updated | current_price: %.2f | old_price: %.2f \n", $current, $stats['total'], date('H:i:s'), $product->external_id, $product->current_price, $product->old_price);
+                    $stats['updated']++;
+                } catch(Exception $e) {
+                    $msg .= sprintf("[%d/%d][%s] Update product[%d] exception: %s \n", $current, $stats['total'], date('H:i:s'), $product['external_id'], $e->getMessage());
+
+                }
             } else {
-                Product::create([
-                    'external_id' => $product->external_id,
-                    'name' => $product->name,
-                    'current_price' => $product->current_price,
-                    'old_price' => $product->old_price,
-                    'promotion' => $product->promotion,
-                    'url' => $product->url,
-                ]);
+                try {
+                    Product::create([
+                        'external_id' => $product->external_id,
+                        'name' => $product->name,
+                        'current_price' => $product->current_price,
+                        'old_price' => $product->old_price,
+                        'promotion' => $product->promotion,
+                        'url' => $product->url,
+                    ]);
+                    $msg .= sprintf("[%d/%d][%s] Product[%d] created \n | current_price: %.2f | old_price: %.2f \n", $current, $stats['total'], date('H:i:s'), $product['external_id'], $product['price'], $product['old_price']);
+                    $stats['created']++;
+                } catch(Exception $e) {
+                    $msg .= sprintf("[%d/%d][%s] Create product[%d] exception: %s \n", $current, $stats['total'], date('H:i:s'), $product['external_id'], $e->getMessage());
+
+                }
             }
         }
 
-        $disabledNum = 0;
         foreach($externalIds as $externalId) {
             $product = Product::where('external_id', $externalId)->first();
             if(in_array($externalId, $exIdsArray)) {
                 $product->update(['active' => 1]);
+                $msg .= sprintf("[%s] Product [%d] enabled \n", date('H:i:s'), $product->external_id);
+                $stats['enabled']++;
             } else {
                 $product->update(['active' => 0]);
+                $msg .= sprintf("[%s] Product [%d] disabled \n", date('H:i:s'), $product->external_id);
+                $stats['disabled']++;
             }
         }
 
-        echo sprintf("Disabled products: %d \n", $disabledNum);
+        // create daily log
+        $fileName = sprintf("%s.log", date("Y.m.d"));
+        Storage::disk('logs')->put($fileName, $msg);
+
+        $this->sendEmailUpdateSummary($stats);
+    }
+
+    public function sendEmailUpdateSummary(array $stats) : void
+    {
+        Mail::to('konrad.da121@gmail.com')->send(new UpdateProducts($stats));
     }
 
     public function createPriceHistory(array $products)
