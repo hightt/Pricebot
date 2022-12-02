@@ -30,8 +30,8 @@ class WebScrapperController extends Controller
             "https://www.dolina-noteci.pl/pol_m_Akcesoria-265.html?counter=",
         ];
 
-        for ($j = 0; $j < count($arrayUrl); $j++) {
-        // for ($j = 1; $j <= 1; $j++) {
+        // for ($j = 0; $j < count($arrayUrl); $j++) {
+        for ($j = 1; $j <= 1; $j++) {
             $flag = true;
             $i = 0;
 
