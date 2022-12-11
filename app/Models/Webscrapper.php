@@ -29,7 +29,7 @@ class Webscrapper extends Model
     public function updateProducts(array $products)
     {
         $externalIds = Product::pluck('external_id')->toArray();
-        $exIdsArray = [];
+        $exIdsSeeds = [];
         $msg = "";
         $stats = [
             'total' => count($products),
@@ -42,7 +42,7 @@ class Webscrapper extends Model
         $current = 0;
         foreach ($products as $product) {
             $current++;
-            $exIdsArray[] = $product['external_id'];
+            $exIdsSeeds[] = $product['external_id'];
             if (in_array($product['external_id'], $externalIds)) {
                 try {
                     Product::where('external_id', $product['external_id'])->update([
@@ -55,9 +55,8 @@ class Webscrapper extends Model
                     ]);
                     $msg .= sprintf("[%d/%d][%s] Product[%d] updated | current_price: %.2f | old_price: %.2f \n", $current, $stats['total'], date('H:i:s'), $product->external_id, $product->current_price, $product->old_price);
                     $stats['updated']++;
-                } catch(Exception $e) {
+                } catch (Exception $e) {
                     $msg .= sprintf("[%d/%d][%s] Update product[%d] exception: %s \n", $current, $stats['total'], date('H:i:s'), $product['external_id'], $e->getMessage());
-
                 }
             } else {
                 try {
@@ -71,23 +70,32 @@ class Webscrapper extends Model
                     ]);
                     $msg .= sprintf("[%d/%d][%s] Product[%d] created \n | current_price: %.2f | old_price: %.2f \n", $current, $stats['total'], date('H:i:s'), $product['external_id'], $product['price'], $product['old_price']);
                     $stats['created']++;
-                } catch(Exception $e) {
+                } catch (Exception $e) {
                     $msg .= sprintf("[%d/%d][%s] Create product[%d] exception: %s \n", $current, $stats['total'], date('H:i:s'), $product['external_id'], $e->getMessage());
-
                 }
             }
         }
 
-        foreach($externalIds as $externalId) {
-            $product = Product::where('external_id', $externalId)->first();
-            if(in_array($externalId, $exIdsArray)) {
-                $product->update(['active' => 1]);
-                $msg .= sprintf("[%s] Product [%d] enabled \n", date('H:i:s'), $product->external_id);
-                $stats['enabled']++;
+        foreach ($exIdsSeeds as $exIdsSeed) {
+            $product = Product::where('external_id', $exIdsSeed)->first();
+
+            if (!isset($product)) {
+                continue;
+            }
+
+            if (in_array($product->external_id, $externalIds)) {
+                if ($product->active != 1) {
+                    /* If product has already active == 1 then do not update and add to stats */
+                    $product->update(['active' => 1]);
+                    $msg .= sprintf("[%s] Product [%d] enabled \n", date('H:i:s'), $product->external_id);
+                    $stats['enabled']++;
+                }
             } else {
-                $product->update(['active' => 0]);
-                $msg .= sprintf("[%s] Product [%d] disabled \n", date('H:i:s'), $product->external_id);
-                $stats['disabled']++;
+                if ($product->active != 0) {
+                    $product->update(['active' => 0]);
+                    $msg .= sprintf("[%s] Product [%d] disabled \n", date('H:i:s'), $product->external_id);
+                    $stats['disabled']++;
+                }
             }
         }
 
@@ -98,7 +106,7 @@ class Webscrapper extends Model
         $this->sendEmailUpdateSummary($stats);
     }
 
-    public function sendEmailUpdateSummary(array $stats) : void
+    public function sendEmailUpdateSummary(array $stats): void
     {
         Mail::to(['konrad.duda121@gmail.com', 'kinga.figarska121@gmail.com'])->send(new UpdateProducts($stats));
     }
