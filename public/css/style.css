@@ -21,7 +21,7 @@ html body {
 .product_name
 {
     text-decoration: none !important;
-    color: #292929;
+    color: #404040;
     font-weight: 700;
 }
 
@@ -42,11 +42,7 @@ tbody > tr > td {
 }
 
 @media only screen and (max-width: 500px) {
-    .product_name
-    {
-        text-decoration: underline !important;
-        color: blue;
-    }
+
 }
 
 
@@ -66,4 +62,8 @@ tbody > tr > td {
 .date, .price
 {
     text-align: center;
+}
+
+a {
+    text-decoration: inherit !important;
 }
