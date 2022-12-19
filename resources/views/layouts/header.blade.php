@@ -13,16 +13,25 @@
                         @if(route('home') == Request::url())
                         <span class="fw-bold text-black">Strona główna</span>
                         @else
-                        Strona główna
+                        <span class="text-black">Strona główna</span>
                         @endif
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('products.index')}}">
-                    @if(route('products.index') == Request::url())
+                        @if(route('products.index') == Request::url())
                         <span class="fw-bold text-black">Produkty</span>
                         @else
-                        Produkty
+                        <span class="text-black">Produkty</span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{route('discount.index')}}">
+                        @if(route('discount.index') == Request::url())
+                        <span class="fw-bold text-black">Największe zniżki</span>
+                        @else
+                        <span class="text-black">Największe zniżki</span>
                         @endif
                     </a>
                 </li>
