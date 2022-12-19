@@ -6,21 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-
 class Product extends Model
 {
     use HasFactory;
     protected $fillable = ['id', 'external_id', 'name', 'current_price', 'old_price', 'promotion', 'url', 'active'];
     protected $guarded = [];
     protected $dates  = ['created_at', 'updated_at'];
-    protected $appends = ['created_at_formatted', 'updated_at_formatted', 'discount', 'axis_data'];
+    protected $appends = ['created_at_formatted', 'updated_at_formatted', 'discount', 'axis_data', 'fake_promotion'];
 
-    public function pricehistories()
+    public function pricehistories() : Object
     {
         return $this->hasMany(PriceHistory::class, 'external_id', 'external_id');
     }
 
-    public function getProductsAjax(Request $request)
+    public function getProductsAjax(Request $request) : string
     {
         $columnIndex =  $request->get('order')[0]['column'];
         $columnName = $request->get('columns')[$columnIndex]['data'];
@@ -58,22 +57,32 @@ class Product extends Model
         );
     }
 
-    public function getCreatedAtFormattedAttribute()
+    public function getCreatedAtFormattedAttribute() : string
     {
         return $this->created_at ? $this->created_at->format('H:i d, M Y') : 'Undefined';
     }
 
-    public function getUpdatedAtFormattedAttribute()
+    public function getUpdatedAtFormattedAttribute() : string
     {
         return $this->updated_at ? $this->updated_at->format('H:i d, M Y') : 'Undefined';
     }
 
-    public function getDiscountAttribute()
+    public function getDiscountAttribute() : array
     {
-        return $this->promotion ? ((float)$this->old_price - (float)$this->current_price) : 0;
+        if(!$this->promotion || (float)$this->old_price <= 0) {
+            return [
+                'price' => 0,
+                'percentage' => 0
+            ];
+        } 
+
+        return [
+            'price' => (float)$this->old_price - (float)$this->current_price,
+            'percentage' => round(100 * ((float)$this->old_price - (float)$this->current_price) / (float)$this->old_price, 2)
+        ];
     }
 
-    public function getAxisDataAttribute()
+    public function getAxisDataAttribute() : array
     {
         $data = [];
         foreach($this->pricehistories()->get() as $priceHistory) {
@@ -83,5 +92,16 @@ class Product extends Model
 
         return $data;
 
+    }
+
+    public function getFakePromotionAttribute() 
+    {
+        if(!$this->promotion) {
+            return false;
+        }
+
+        $priceHistory = $this->pricehistories()->orderBy('created_at', 'desc')->limit(30)->pluck('price')->unique()->values();
+
+        return count($priceHistory) > 1 && ($priceHistory[0] < $priceHistory[1]) ? false : true;
     }
 }
