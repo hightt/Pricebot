@@ -9,17 +9,15 @@ class ProductAnaliseController extends Controller
 {
     public function index()
     {
-        return view('layouts.discount');
+        return view('layouts.discount')->with('products', $this->biggestDiscount());
     }
 
-    public function bestDealProductsAjax()
+    public function biggestDiscount()
     {
-        $collection = collect(Product::where('active', 1)->get());
+        $result = Product::all()->filter(function($product) {
+            return !$product->fake_promotion && $product->active && $product->discount['percentage'] > 20;
+        })->sortByDesc('discount')->paginate(25);
         
-        $result = $collection->filter(function($product) {
-            return $product->discount > 0;
-        })->sortByDesc('discount')->take(10)->values();
-
-        return response()->json(['result' => $result]);
+        return $result;
     }
 }
