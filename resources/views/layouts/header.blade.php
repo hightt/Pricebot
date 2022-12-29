@@ -29,9 +29,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('discount.index')}}">
                         @if(route('discount.index') == Request::url())
-                        <span class="fw-bold text-black">Największe zniżki</span>
+                        <span class="fw-bold text-black">Zweryfikowane promocje</span>
                         @else
-                        <span class="text-black">Największe zniżki</span>
+                        <span class="text-black">Zweryfikowane promocje</span>
                         @endif
                     </a>
                 </li>
