@@ -94,7 +94,7 @@ class Product extends Model
 
     }
 
-    public function getFakePromotionAttribute() 
+    public function getFakePromotionAttribute() : bool
     {
         if(!$this->promotion) {
             return false;
