@@ -15,7 +15,7 @@ class ProductAnaliseController extends Controller
     public function biggestDiscount()
     {
         $result = Product::all()->filter(function($product) {
-            return !$product->fake_promotion && $product->active && $product->discount['percentage'] > 20;
+            return !$product->fake_promotion && $product->active && $product->discount['percentage'] > 5;
         })->sortByDesc('discount')->paginate(25);
         
         return $result;
