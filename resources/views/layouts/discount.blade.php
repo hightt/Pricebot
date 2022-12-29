@@ -5,8 +5,8 @@
     Produkt wyświetlany w tej sekcji musi spełniać następujące kryteria:
     <ul>
         <li>Produkt musi być na promocji.</li>
-        <li>Promocja musi uwzględniać zniżkę wielkości minimum 20%.</li>
-        <li>Zaszła zmiana w cenie produktu w ciągu ostatnich 30 dni (wykluczenie fake'owych promocji).</li>
+        <li>Promocja musi uwzględniać zniżkę wielkości minimum 5%.</li>
+        <li>Zaszła zmiana w cenie produktu w ciągu ostatnich 30 dni (wykluczenie <span class="text-danger fw-bold">fake'owych promocji</span>).</li>
         <li>Produkt musi mieć podaną starą cenę, produkty mające promocję bez starej ceny nie są uwzględniane.</li>
     </ul>
 </div>
