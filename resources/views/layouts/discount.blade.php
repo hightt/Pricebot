@@ -13,7 +13,6 @@
 <div id="root" class="container">
 
     @if(count($products) > 1)
-    @foreach ($products as $product)
     <table class="table">
         <thead>
             <tr>
@@ -23,14 +22,16 @@
             </tr>
         </thead>
         <tbody>
+            @foreach ($products as $product)
             <tr>
                 <td><a class="product_name" href="{{ route('products.show', $product->id) }}">{{$product->name}}</a></td>
                 <td>{{sprintf("%.2f zł", $product->discount['price'])}}</td>
                 <td>{{sprintf("%.2f %%", $product->discount['percentage'])}}</td>
             </tr>
+            @endforeach
+
         </tbody>
     </table>
-    @endforeach
     @else
     <h4 class="text-center">Brak produktów na promociji</h4>
     @endif
