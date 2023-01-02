@@ -17,8 +17,8 @@
         <thead>
             <tr>
                 <th scope="col">Produkt</th>
-                <th>Zniżka cenowa</th>
-                <th>Procent zniżki</th>
+                <th>Zniżka cenowa (zł)</th>
+                <th>Zniżka procentowa</th>
             </tr>
         </thead>
         <tbody>
