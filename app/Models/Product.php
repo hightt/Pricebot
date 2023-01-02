@@ -88,6 +88,11 @@ class Product extends Model
         foreach($this->pricehistories()->get() as $priceHistory) {
             $data['oyAxis'][] = $priceHistory->created_at_formatted;
             $data['oxAxis'][] = $priceHistory->price;
+            
+            $data['common'][] = [
+                'x' => $priceHistory->created_at_formatted,
+                'y' => $priceHistory->price
+            ];
         }
 
         return $data;
@@ -101,7 +106,7 @@ class Product extends Model
         }
 
         $priceHistory = $this->pricehistories()->orderBy('created_at', 'desc')->limit(30)->pluck('price')->unique()->values();
-
         return count($priceHistory) > 1 && ($priceHistory[0] < $priceHistory[1]) ? false : true;
     }
+
 }
