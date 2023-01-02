@@ -3,11 +3,17 @@
 
 @section('content')
 <script type="text/javascript" src="{{ asset('libraries/chart.js') }}"></script>
+
 <div class="col-lg-12 pt-4 pb-4">
     <div class="row text-left ms-5">
-        <a href="{{route('products.index')}}">
-            <i class="fa-solid fa-left-long arrow-close" style="font-size: 35px;"></i>
-        </a>
+        <div class="col-6">
+            <a href="{{route('products.index')}}">
+                <i class="fa-solid fa-left-long arrow-close" data-toggle="tooltip" title="Powrót" style="font-size: 25px;"></i>
+            </a>
+        </div>
+        <div class="col-6 text-end pe-4">
+            <i id="addToCompare" class="fa-solid fa-plus arrow-close" data-toggle="tooltip" title="Dodaj produkt do listy porównań" style="font-size: 25px;"></i>
+        </div>
     </div>
     <div class="row">
         <h5 class="text-center">{{$product->name}}</h5>
@@ -97,14 +103,6 @@
             <div class="card card-body">
                 <div class="row">
                     <div class="col-lg-4 fw-bold">
-                        Ostatnia aktualizacja:
-                    </div>
-                    <div class="col-lg-8">
-                        {{$product->updated_at_formatted}}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 fw-bold">
                         URL:
                     </div>
                     <div class="col-lg-8">
@@ -120,30 +118,47 @@
 <script>
     $(document).ready(function() {
         var productId = "{{$product->id}}";
-        console.log(productId);
+
+
+        $("#addToCompare").click(function() {
+            $.ajax({
+                method: "GET",
+                url: "{{ route('compare.add') }}",
+                data: {
+                    productId: productId,
+                },
+                success: function(response) {
+                    var message = response;
+                    showMessage(message.message, message.status);
+                },
+                error: function(response) {
+                    var message = response.responseJSON;
+                    showMessage(message.message, message.status);
+                }
+            })
+        });
 
         function getProduct() {
             $.ajax({
                 url: "/getProductsAjax/" + productId,
                 success: function(response) {
-                    // console.log(response);
                     drawChart(response);
                 },
                 error: function(response) {
-                    console.log(response);
+
                 }
 
             });
         }
-        
+
         function drawChart(product) {
 
             const data = {
                 labels: product.axis_data.oyAxis,
                 datasets: [{
                     label: "Cena: ",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: '#2A3990',
+                    borderColor: '#2A3990',
                     data: product.axis_data.oxAxis,
                 }]
             };
