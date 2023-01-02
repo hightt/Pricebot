@@ -9,7 +9,7 @@
             <h5 style="text-align: justify;">
                 Pricebot tworzy historię cen produktów, a także dokonuje analizy wiarygodności promocji produktów wyświetlanych w hurtowni. Dane przedstawione są na interaktywnych wykresach umożliwiających szybkie i przyjemne pozyskiwanie informacji.
             </h5>
-            <ul class="fa-ul">
+            <ul class="fa-ul mt-4">
                 <li>
                     <span class="fa-li">
                         <i class="fa-solid fa-check" style="color: green"></i>
@@ -24,9 +24,9 @@
                 </li>
                 <li>
                     <span class="fa-li">
-                    <i class="fa-solid fa-person-digging"></i>
+                        <i class="fa-solid fa-check" style="color: green"></i>
                     </span>
-                    <span class="text-muted">Porównywanie cen produktów</span>
+                    Porównywanie cen produktów promocji
                 </li>
             </ul>
         </div>
