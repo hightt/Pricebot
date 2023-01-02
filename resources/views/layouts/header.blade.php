@@ -35,6 +35,15 @@
                         @endif
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{route('compare.index')}}">
+                        @if(route('compare.index') == Request::url())
+                        <span class="fw-bold text-black">Porównaj produkty</span>
+                        @else
+                        <span class="text-black">Porównaj produkty</span>
+                        @endif
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
