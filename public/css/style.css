@@ -51,6 +51,10 @@ tbody > tr > td {
     font-size: 35px;
 }
 
+.arrow-close:hover {
+    cursor: pointer;
+}
+
 
 .discount-title
 {
@@ -65,4 +69,13 @@ tbody > tr > td {
 
 a {
     text-decoration: inherit !important;
+}
+
+
+.msg-alert
+{
+    max-width: 250px;
+    position: absolute;
+    top: 5%;
+    right: 5%
 }
