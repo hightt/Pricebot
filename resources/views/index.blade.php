@@ -30,7 +30,6 @@
     <script type="text/javascript" src="{{ asset('libraries/DataTables/Responsive-2.3.0/js/dataTables.responsive.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/Responsive-2.3.0/js/responsive.bootstrap5.js') }}"></script>
     <script type="text/javascript" src="{{ asset('libraries/DataTables/Buttons-2.2.3/js/buttons.colVis.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.cookie.js') }}"></script>
 
     <script>
         $(document).ready(function() {
