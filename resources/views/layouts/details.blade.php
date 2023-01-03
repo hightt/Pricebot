@@ -130,6 +130,9 @@
                 success: function(response) {
                     var message = response;
                     showMessage(message.message, message.status);
+
+                    var productsNum = parseInt($("#countProductsDiv").text()) + 1;
+                    $("#countProductsDiv").text(productsNum);
                 },
                 error: function(response) {
                     var message = response.responseJSON;
