@@ -33,7 +33,7 @@
         <div class="text-center">
         <i class="d-block fa-solid fa-circle-exclamation" style="font-size: 125px;"></i>
             <h5 class="mt-2">
-                Brak danych. Dodaj produkt do analizy ceny w jego szczegółach za pomocą przycisku
+                Brak danych. Dodaj produkt do porównania ceny w jego szczegółach za pomocą przycisku
                 <i class="fa-solid fa-plus"></i>
             </h5>
         </div>
