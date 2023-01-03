@@ -42,6 +42,7 @@
                         @else
                         <span class="text-black">Porównaj produkty</span>
                         @endif
+                        <div id="countProductsDiv" class="circle">{{!empty(Session::get('productsToCompare')) ? count(Session::get('productsToCompare')) : 0}}</div>
                     </a>
                 </li>
             </ul>
