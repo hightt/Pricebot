@@ -18,15 +18,15 @@
             <tr>
                 <th scope="col">Produkt</th>
                 <th>Zniżka cenowa (zł)</th>
-                <th>Zniżka procentowa</th>
+                <th>Zniżka procentowa (%)</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($products as $product)
             <tr>
                 <td><a class="product_name" href="{{ route('products.show', $product->id) }}">{{$product->name}}</a></td>
-                <td>{{sprintf("%.2f zł", $product->discount['price'])}}</td>
-                <td>{{sprintf("%.2f %%", $product->discount['percentage'])}}</td>
+                <td>{{sprintf("%.2f", $product->discount['price'])}}</td>
+                <td>{{sprintf("%.2f", $product->discount['percentage'])}}</td>
             </tr>
             @endforeach
 
