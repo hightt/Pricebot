@@ -30,6 +30,11 @@ copy content of file .env.example to .env and set your configuration
 php artisan key:generate
 ```
 
+## How to run the bot?
+```bash
+  update:products
+```
+This command create daily price history and update price all products in db
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
