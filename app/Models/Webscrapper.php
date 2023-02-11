@@ -103,7 +103,7 @@ class Webscrapper extends Model
         $fileName = sprintf("%s.log", date("Y.m.d"));
         Storage::disk('logs')->put($fileName, $msg);
 
-        $this->sendEmailUpdateSummary($stats);
+        // $this->sendEmailUpdateSummary($stats);
     }
 
     public function sendEmailUpdateSummary(array $stats): void
