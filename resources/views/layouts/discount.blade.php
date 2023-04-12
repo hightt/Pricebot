@@ -42,5 +42,7 @@
     </div>
 </div>
 
-
+<script>
+    sessionStorage.setItem('current_tab_url', "{{route('discount.index')}}");
+</script>
 @endsection

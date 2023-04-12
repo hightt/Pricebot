@@ -7,7 +7,7 @@
 <div class="col-lg-12 pt-4 pb-4">
     <div class="row text-left ms-5">
         <div class="col-6">
-            <a href="{{route('products.index')}}">
+            <a id="btn_back" href="{{route('products.index')}}">
                 <i class="fa-solid fa-left-long arrow-close" data-toggle="tooltip" title="Powrót" style="font-size: 25px;"></i>
             </a>
         </div>
@@ -203,18 +203,18 @@
                     }
                 }
             };
-
-
-
             const myChart = new Chart(
                 document.getElementById("myChart"),
 
                 config
             );
         }
-
-
         getProduct();
+
+        var session =  sessionStorage.getItem('current_tab_url');
+        if(session != null) {
+            $("#btn_back").attr('href', session);
+        }
     });
 </script>
 
