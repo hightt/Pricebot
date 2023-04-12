@@ -11,7 +11,5 @@
     <p>Zaktualizowano: {{$content['updated']}}</p>
     <p>Aktywowano w bazie danych: {{$content['enabled']}}</p>
     <p>Wyłączono w bazie danych: {{$content['disabled']}}</p>
-    --------------------------------------------- <br>
-    <?= sprintf("PS. Twój poziom essy (✿◠‿◠) dziś %s wynosi %d %%", date("d.m.Y"), rand(50, 100)) ?>
 </body>
 </html>

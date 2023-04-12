@@ -57,7 +57,7 @@
             ],
             paging: true,
             order: [
-                [4, 'desc']
+                [3, 'desc']
             ],
             info: false,
             lengthChange: false,
@@ -75,6 +75,9 @@
             // "dom": 'rtp'
 
         });
+        sessionStorage.setItem('current_tab_url', "{{route('products.index')}}");
+
     });
+
 </script>
 @endsection

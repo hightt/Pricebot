@@ -74,7 +74,7 @@ class Product extends Model
                 'price' => 0,
                 'percentage' => 0
             ];
-        } 
+        }
 
         return [
             'price' => (float)$this->old_price - (float)$this->current_price,
@@ -88,7 +88,6 @@ class Product extends Model
         foreach($this->pricehistories()->get() as $priceHistory) {
             $data['oyAxis'][] = $priceHistory->created_at_formatted;
             $data['oxAxis'][] = $priceHistory->price;
-            
             $data['common'][] = [
                 'x' => $priceHistory->created_at_formatted,
                 'y' => $priceHistory->price
