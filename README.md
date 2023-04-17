@@ -25,7 +25,8 @@ Project is created with:
 git clone https://github.com/hightt/Pricebot.git
 cd Pricebot/
 composer install
-sudo chmod a+wrx -R .
+sudo chmod -R 755 storage
+sudo chmod -R 755 bootstrap/cache
 copy content of file .env.example to .env and set your configuration
 php artisan key:generate
 ```
