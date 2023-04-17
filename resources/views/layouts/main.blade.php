@@ -34,12 +34,12 @@
             <a class="show-products btn btn-warning pt-2 pb-2 ps-4 pe-4 mt-4" href="{{route('products.index')}}" role="button">Zobacz aktualne ceny produktów</a>
             <p class="text-muted mt-2" style="font-size: 10px;">*
                 Dolina Noteci posłużyła jako przykład zbioru produktów do analizy cen.
-                Niniejsza aplikacja internetowa nie ma na celu działań konkurencyjnych wobec fimy Dolina Noteci.
+                Niniejsza aplikacja internetowa nie ma charakteru komercyjnego, ani nie ma na celu działań konkurencyjnych wobec fimy Dolina Noteci.
             </p>
         </div>
     </div>
     <div class="col-lg-6">
-        <!-- 
+        <!--
             Img author: Matthew Jedrzejewski
             https://dribbble.com/MattJedrzejewski
         -->
