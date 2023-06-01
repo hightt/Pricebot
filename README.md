@@ -33,7 +33,7 @@ php artisan key:generate
 
 ## How to run the bot?
 ```bash
-  php artisan update:products
+  php artisan products:update
 ```
 This command create daily price history and update price all products in db
 ## Contributing
