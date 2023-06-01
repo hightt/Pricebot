@@ -8,14 +8,14 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WebScrapperController;
 use App\Models\Webscrapper;
 
-class UpdateProductsData extends Command
+class ProductsUpdate extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'update:products';
+    protected $signature = 'products:update';
 
     /**
      * The console command description.
